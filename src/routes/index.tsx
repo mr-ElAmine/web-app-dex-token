@@ -3,6 +3,7 @@ import { type ReactNode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
 
+import Account from '@/components/pages/Account';
 import Alerts from '@/components/pages/Alerts';
 import EmailVerified from '@/components/pages/EmailVerified';
 import Login from '@/components/pages/Login';
@@ -21,7 +22,7 @@ const routesForPublic = [
 const routesForAuthenticatedOnly = [
   { path: '/email-verified', element: <EmailVerified />, isPrivate: true },
   { path: '/', element: <Alerts />, isPrivate: true },
-  { path: '/account', element: <>account</>, isPrivate: true },
+  { path: '/account', element: <Account />, isPrivate: true },
 ];
 const allRoutes = [...routesForAuthenticatedOnly, ...routesForPublic];
 
