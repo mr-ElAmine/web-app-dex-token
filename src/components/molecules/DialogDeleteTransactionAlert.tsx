@@ -27,7 +27,7 @@ const DialogDeleteTransactionAlert = ({
   onConfirm,
 }: DialogDeleteTransactionAlertProps): ReactNode => {
   const { toast } = useToast();
-  const { mutate: deleteAlert, isLoading } = useDeleteTransactionAlert();
+  const { mutate: deleteAlert, isPending } = useDeleteTransactionAlert();
   const [open, setOpen] = useState<boolean>(false);
 
   const handleDelete = () => {
@@ -80,7 +80,7 @@ const DialogDeleteTransactionAlert = ({
             <Button
               variant='outline'
               className='bg-primary'
-              isLoading={isLoading}
+              isLoading={isPending}
               onClick={handleDelete}
             >
               Confirm
