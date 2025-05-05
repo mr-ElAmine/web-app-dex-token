@@ -21,29 +21,35 @@ export const useGetTransactionAlert = (): UseQueryResult<
   TransactionAlertType[],
   AxiosError<DefaultError>
 > => {
-  return useQuery<TransactionAlertType[], AxiosError<DefaultError>>('transaction-alerts', () =>
-    AxiosInstance.get<TransactionAlertType[]>('/transaction-alert').then((res) => res.data),
-  );
+  return useQuery({
+    queryKey: ['transaction-alerts'],
+    queryFn: () =>
+      AxiosInstance.get<TransactionAlertType[]>('/transaction-alert').then((res) => res.data),
+  });
 };
 
 export const useDeleteTransactionAlert = (): UseMutationResult<
-  unknown,
+  void,
   AxiosError<DefaultError>,
   string
 > => {
-  return useMutation((alertId: string) =>
-    AxiosInstance.delete('/transaction-alert', {
-      data: { alertId },
-    }).then(() => undefined),
-  );
+  return useMutation({
+    mutationFn: (alertId: string) =>
+      AxiosInstance.delete('/transaction-alert', { data: { alertId } }).then(() => undefined),
+    onSuccess: () => {},
+  });
 };
 
 export const useCreateTransactionAlert = (): UseMutationResult<
-  unknown,
+  TransactionAlertType,
   AxiosError<DefaultError>,
   CreateTransactionAlertType
 > => {
-  return useMutation((newAlert: CreateTransactionAlertType) =>
-    AxiosInstance.post('/transaction-alert', newAlert).then((res) => res.data),
-  );
+  return useMutation({
+    mutationFn: (newAlert: CreateTransactionAlertType) =>
+      AxiosInstance.post<TransactionAlertType>('/transaction-alert', newAlert).then(
+        (res) => res.data,
+      ),
+    onSuccess: () => {},
+  });
 };

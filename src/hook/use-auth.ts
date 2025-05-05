@@ -33,50 +33,62 @@ export const useLogin = (): UseMutationResult<
   AxiosError<DefaultError>,
   LoginFormInput
 > => {
-  return useMutation<AxiosResponse<LoginResponse>, AxiosError<DefaultError>, LoginFormInput>(
-    (credentials) => AxiosInstance.post<LoginResponse>('/auth/login', credentials),
-    {
-      onSuccess: (res) => {
-        setCookie('accessToken', res.data.accessToken);
-        setCookie('refreshToken', res.data.refreshToken);
-      },
+  return useMutation<AxiosResponse<LoginResponse>, AxiosError<DefaultError>, LoginFormInput>({
+    mutationFn: (credentials) => AxiosInstance.post<LoginResponse>('/auth/login', credentials),
+    onSuccess: (res) => {
+      setCookie('accessToken', res.data.accessToken);
+      setCookie('refreshToken', res.data.refreshToken);
     },
-  );
+  });
 };
 
 export const useRegister = (): UseMutationResult<
   AxiosResponse<DefaultResponse>,
   AxiosError<DefaultError>,
-  RegistrationFormInput,
-  unknown
+  RegistrationFormInput
 > => {
-  return useMutation((payload: RegistrationFormInput) =>
-    AxiosInstance.post('/auth/registration', payload),
-  );
+  return useMutation<
+    AxiosResponse<DefaultResponse>,
+    AxiosError<DefaultError>,
+    RegistrationFormInput
+  >({
+    mutationFn: (payload) => AxiosInstance.post<DefaultResponse>('/auth/registration', payload),
+  });
 };
 
-export const useRefreshToken = (): ReturnType<typeof useMutation<LoginResponse, unknown, void>> => {
-  return useMutation(() =>
-    AxiosInstance.post<LoginResponse>('/auth/refresh', {
-      refreshToken: getCookie('refreshToken'),
-    }).then((res) => {
-      setCookie('accessToken', res.data.accessToken);
-      setCookie('refreshToken', res.data.refreshToken);
-      return res.data;
-    }),
-  );
+export const useRefreshToken = (): UseMutationResult<
+  LoginResponse,
+  AxiosError<DefaultError>,
+  void
+> => {
+  return useMutation<LoginResponse, AxiosError<DefaultError>, void>({
+    mutationFn: () =>
+      AxiosInstance.post<LoginResponse>('/auth/refresh', {
+        refreshToken: getCookie('refreshToken'),
+      }).then((res) => {
+        setCookie('accessToken', res.data.accessToken);
+        setCookie('refreshToken', res.data.refreshToken);
+        return res.data;
+      }),
+  });
 };
 
-export const useSendEmailVerification = (): ReturnType<
-  typeof useMutation<unknown, unknown, void>
+export const useSendEmailVerification = (): UseMutationResult<
+  void,
+  AxiosError<DefaultError>,
+  void
 > => {
-  return useMutation(() => AxiosInstance.post('/auth/send-email-verification'));
+  return useMutation<void, AxiosError<DefaultError>, void>({
+    mutationFn: () => AxiosInstance.post('/auth/send-email-verification').then(() => {}),
+  });
 };
 
-export const useVerifyEmail = (): ReturnType<
-  typeof useMutation<unknown, unknown, { pin: string }>
+export const useVerifyEmail = (): UseMutationResult<
+  void,
+  AxiosError<DefaultError>,
+  { pin: string }
 > => {
-  return useMutation((payload: { pin: string }) =>
-    AxiosInstance.post('/auth/verity-email', payload),
-  );
+  return useMutation<void, AxiosError<DefaultError>, { pin: string }>({
+    mutationFn: (payload) => AxiosInstance.post('/auth/verify-email', payload).then(() => {}),
+  });
 };
