@@ -43,7 +43,7 @@ const CreateTransactionAlertForm = ({
     },
   });
 
-  const { mutate: createAlert, isLoading } = useCreateTransactionAlert();
+  const { mutate: createAlert, isPending } = useCreateTransactionAlert();
 
   const onSubmit = (data: CreateTransactionAlertType) => {
     createAlert(data, {
@@ -99,11 +99,11 @@ const CreateTransactionAlertForm = ({
           )}
         />
         <div className='flex justify-end gap-2'>
-          <Button variant='black' type='button' onClick={onCancel} isLoading={isLoading}>
+          <Button variant='black' type='button' onClick={onCancel} isLoading={isPending}>
             Cancel
           </Button>
 
-          <Button isLoading={isLoading} variant='outline' type='submit'>
+          <Button isLoading={isPending} variant='outline' type='submit'>
             Confirm
           </Button>
         </div>

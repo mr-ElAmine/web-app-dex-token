@@ -36,7 +36,7 @@ type LoginValues = z.infer<typeof LoginSchema>;
 const LoginForm = (): ReactNode => {
   const { toast } = useToast();
   const { login: authLogin } = useAuth();
-  const { mutate: login, isLoading } = useLogin();
+  const { mutate: login, isPending } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginValues>({
@@ -117,7 +117,7 @@ const LoginForm = (): ReactNode => {
           </CardContent>
 
           <CardFooter className='flex justify-end'>
-            <Button type='submit' variant='black' disabled={isLoading} isLoading={isLoading}>
+            <Button type='submit' variant='black' disabled={isPending} isLoading={isPending}>
               Sign In
             </Button>
           </CardFooter>

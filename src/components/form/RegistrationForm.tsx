@@ -34,7 +34,7 @@ type RegistrationValues = z.infer<typeof RegistrationSchema>;
 
 const RegistrationForm = (): ReactNode => {
   const { toast } = useToast();
-  const { mutate: register, isLoading } = useRegister();
+  const { mutate: register, isPending } = useRegister();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -154,7 +154,7 @@ const RegistrationForm = (): ReactNode => {
           </CardContent>
 
           <CardFooter className='flex justify-end'>
-            <Button type='submit' variant='black' disabled={isLoading} isLoading={isLoading}>
+            <Button type='submit' variant='black' disabled={isPending} isLoading={isPending}>
               Create Account
             </Button>
           </CardFooter>
