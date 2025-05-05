@@ -1,4 +1,4 @@
-import { useMutation, type UseMutationResult } from 'react-query';
+import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 
 import { getCookie, setCookie } from '@/configuration/utils/cookie';
 import AxiosInstance from '@/lib/axios';

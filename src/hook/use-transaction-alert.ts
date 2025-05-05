@@ -1,4 +1,9 @@
-import { useMutation, useQuery, type UseQueryResult, type UseMutationResult } from 'react-query';
+import {
+  useMutation,
+  useQuery,
+  type UseQueryResult,
+  type UseMutationResult,
+} from '@tanstack/react-query';
 
 import type {
   CreateTransactionAlertType,
