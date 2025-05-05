@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Couleurs primaires */
+  --color-primary: #046c4e;
+  --color-primary--light: #0e8057;
+  --color-primary--dark: #03553a;
+
+  --color-secondary: #43a047; /* Vert plus clair */
+  --color-secondary--light: #66bb6a; /* Vert encore plus clair */
+  --color-secondary--dark: #2e7d32; /* Vert avec une légère ombre */
+}
+
+.audiowide-regular {
+  font-family: 'Audiowide', sans-serif;
+  font-style: normal;
+}
+
+.custom-gradient {
+  background: linear-gradient(
+    185deg,
+    var(--color-primary--dark),
+    var(--color-primary),
+    var(--color-primary--light)
+  );
+}
+
+.custom-gradient-secondary {
+  background: linear-gradient(
+    185deg,
+    var(--color-secondary--dark),
+    var(--color-secondary),
+    var(--color-secondary--light)
+  );
+}
