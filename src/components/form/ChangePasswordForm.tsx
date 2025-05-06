@@ -5,7 +5,6 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { ChangePasswordSchema } from '@/configuration/utils/zodParser';
 import { useChangePassword } from '@/hook/use-auth';
-import { useAuth } from '@/hook/use-auth-context';
 import { useToast } from '@/hook/use-toast';
 
 import Button from '../atoms/Button';
