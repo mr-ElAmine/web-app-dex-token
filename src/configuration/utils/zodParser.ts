@@ -107,3 +107,56 @@ export const CreateTransactionAlertSchema = z.object({
 });
 
 export type CreateTransactionAlertType = z.infer<typeof CreateTransactionAlertSchema>;
+
+export const ChangePasswordSchema = z
+  .object({
+    currentPassword: z
+      .string()
+      .min(8, { message: 'Password must be at least 8 characters long.' })
+      .regex(/[a-z]/, {
+        message: 'Password must contain at least one lowercase letter.',
+      })
+      .regex(/[A-Z]/, {
+        message: 'Password must contain at least one uppercase letter.',
+      })
+      .regex(/[0-9]/, { message: 'Password must contain at least one number.' })
+      .regex(/[^a-zA-Z0-9]/, {
+        message: 'Password must contain at least one special character.',
+      }),
+    newPassword: z
+      .string()
+      .min(8, { message: 'Password must be at least 8 characters long.' })
+      .regex(/[a-z]/, {
+        message: 'Password must contain at least one lowercase letter.',
+      })
+      .regex(/[A-Z]/, {
+        message: 'Password must contain at least one uppercase letter.',
+      })
+      .regex(/[0-9]/, { message: 'Password must contain at least one number.' })
+      .regex(/[^a-zA-Z0-9]/, {
+        message: 'Password must contain at least one special character.',
+      }),
+    confirmPassword: z
+      .string()
+      .min(8, { message: 'Password must be at least 8 characters long.' })
+      .regex(/[a-z]/, {
+        message: 'Password must contain at least one lowercase letter.',
+      })
+      .regex(/[A-Z]/, {
+        message: 'Password must contain at least one uppercase letter.',
+      })
+      .regex(/[0-9]/, { message: 'Password must contain at least one number.' })
+      .regex(/[^a-zA-Z0-9]/, {
+        message: 'Password must contain at least one special character.',
+      }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "New password and confirmation don't match.",
+    path: ['confirmPassword'],
+  })
+  .refine((data) => data.currentPassword !== data.newPassword, {
+    message: 'New password must be different from the current password.',
+    path: ['newPassword'],
+  });
+
+export type ChangePasswordType = z.infer<typeof ChangePasswordSchema>;

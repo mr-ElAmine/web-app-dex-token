@@ -20,6 +20,11 @@ export interface LoginResponse {
   refreshToken: string;
 }
 
+interface ChangePasswordInput {
+  currentPassword: string;
+  newPassword: string;
+}
+
 interface DefaultResponse {
   message: string;
 }
@@ -91,4 +96,17 @@ export const useVerifyEmail = (): UseMutationResult<
   return useMutation<void, AxiosError<DefaultError>, { pin: string }>({
     mutationFn: (payload) => AxiosInstance.post('/auth/verity-email', payload).then(() => {}),
   });
+};
+
+export const useChangePassword = (): UseMutationResult<
+  AxiosResponse<DefaultResponse>,
+  AxiosError<DefaultError>,
+  ChangePasswordInput
+> => {
+  return useMutation<AxiosResponse<DefaultResponse>, AxiosError<DefaultError>, ChangePasswordInput>(
+    {
+      mutationFn: (payload) =>
+        AxiosInstance.post<DefaultResponse>('/auth/change-password', payload),
+    },
+  );
 };

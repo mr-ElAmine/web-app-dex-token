@@ -14,6 +14,7 @@ import {
 import { Input } from '../atoms/Input';
 import { Label } from '../atoms/Label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../atoms/Tabs';
+import ChangePasswordForm from '../form/ChangePasswordForm';
 
 const Account = (): ReactNode => {
   const { user } = useAuth();
@@ -44,27 +45,7 @@ const Account = (): ReactNode => {
           </Card>
         </TabsContent>
         <TabsContent value='password'>
-          <Card>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you'll be logged out.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className='space-y-2'>
-              <div className='space-y-1'>
-                <Label htmlFor='current'>Current password</Label>
-                <Input id='current' type='password' disabled />
-              </div>
-              <div className='space-y-1'>
-                <Label htmlFor='new'>New password</Label>
-                <Input id='new' type='password' disabled />
-              </div>
-            </CardContent>
-            <CardFooter className='flex justify-end'>
-              <Button disabled>Save password</Button>
-            </CardFooter>
-          </Card>
+          <ChangePasswordForm />
         </TabsContent>
       </Tabs>
     </div>
