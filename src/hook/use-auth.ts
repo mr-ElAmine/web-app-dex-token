@@ -89,6 +89,6 @@ export const useVerifyEmail = (): UseMutationResult<
   { pin: string }
 > => {
   return useMutation<void, AxiosError<DefaultError>, { pin: string }>({
-    mutationFn: (payload) => AxiosInstance.post('/auth/verify-email', payload).then(() => {}),
+    mutationFn: (payload) => AxiosInstance.post('/auth/verity-email', payload).then(() => {}),
   });
 };
