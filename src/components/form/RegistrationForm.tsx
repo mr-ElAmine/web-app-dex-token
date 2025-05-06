@@ -3,6 +3,7 @@ import { useState, type ReactNode } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff } from 'lucide-react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { RegistrationSchema } from '@/configuration/utils/zodParser';
 import { useRegister } from '@/hook/use-auth';
@@ -33,6 +34,7 @@ import type { z } from 'zod';
 type RegistrationValues = z.infer<typeof RegistrationSchema>;
 
 const RegistrationForm = (): ReactNode => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const { mutate: register, isPending } = useRegister();
 
@@ -57,6 +59,7 @@ const RegistrationForm = (): ReactNode => {
           title: 'Registration successful!',
           description: 'Your account has been created successfully.',
         });
+        navigate('/login');
       },
       onError: (error) => {
         toast({
