@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 
 import { cn } from '@/configuration/utils';
 
@@ -25,6 +25,7 @@ export interface TableHandlerProps<T> {
   columns: Column<T>[];
   data: T[];
   caption: string;
+  minLoadingTime?: number;
 }
 
 const TableHandler = <T extends object>({
@@ -32,10 +33,29 @@ const TableHandler = <T extends object>({
   columns,
   data,
   caption,
+  minLoadingTime = 1000,
 }: TableHandlerProps<T>): ReactNode => {
+  const [showLoader, setShowLoader] = useState(isLoading);
+  const [startTime, setStartTime] = useState<number>(0);
+
+  useEffect(() => {
+    if (isLoading) {
+      setStartTime(Date.now());
+      setShowLoader(true);
+      return;
+    }
+    const elapsed = Date.now() - startTime;
+    const remaining = minLoadingTime - elapsed;
+    if (remaining > 0) {
+      const timer = setTimeout(() => setShowLoader(false), remaining);
+      return () => clearTimeout(timer);
+    } else {
+      setShowLoader(false);
+    }
+  }, [isLoading, minLoadingTime, startTime]);
   return (
     <Table>
-      {data.length === 0 && !isLoading && <TableCaption>{caption}</TableCaption>}
+      {data.length === 0 && !showLoader && <TableCaption>{caption}</TableCaption>}
 
       <TableHeader>
         <TableRow>
@@ -47,8 +67,8 @@ const TableHandler = <T extends object>({
         </TableRow>
       </TableHeader>
 
-      <TableBody className={cn(data.length === 0 && !isLoading && 'border-b')}>
-        {isLoading
+      <TableBody className={cn(data.length === 0 && !showLoader && 'border-b')}>
+        {showLoader
           ? Array.from({ length: 10 }).map((_, rowIndex) => (
               <TableRow key={rowIndex}>
                 {columns.map((col, colIndex) => (
