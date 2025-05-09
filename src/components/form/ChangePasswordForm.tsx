@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Eye, EyeOff } from 'lucide-react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { ChangePasswordSchema } from '@/configuration/utils/zodParser';
@@ -37,6 +38,10 @@ type ChangePasswordFormProps = {
 };
 
 const ChangePasswordForm = ({ onCancel, onSuccess }: ChangePasswordFormProps): ReactNode => {
+  const [currentPassword, setCurrentPassword] = useState<boolean>(false);
+  const [newPassword, setNewPassword] = useState<boolean>(false);
+  const [confirmPassword, setConfirmPassword] = useState<boolean>(false);
+
   const form = useForm<ChangePasswordType>({
     resolver: zodResolver(ChangePasswordSchema),
     defaultValues: {
@@ -94,10 +99,16 @@ const ChangePasswordForm = ({ onCancel, onSuccess }: ChangePasswordFormProps): R
                 <FormItem>
                   <FormLabel>Current password</FormLabel>
                   <FormControl>
-                    <Input type='password' placeholder='••••••••' {...field} />
+                    <Input
+                      placeholder='Enter your current password'
+                      {...field}
+                      type={currentPassword ? 'text' : 'password'}
+                      Icon={currentPassword ? EyeOff : Eye}
+                      onIconClick={() => setCurrentPassword((prev) => !prev)}
+                    />
                   </FormControl>
                   <FormDescription>Enter your current password.</FormDescription>
-                  <FormMessage />
+                  <FormMessage className='text-red-200' />
                 </FormItem>
               )}
             />
@@ -109,12 +120,18 @@ const ChangePasswordForm = ({ onCancel, onSuccess }: ChangePasswordFormProps): R
                 <FormItem>
                   <FormLabel>New password</FormLabel>
                   <FormControl>
-                    <Input type='password' placeholder='••••••••' {...field} />
+                    <Input
+                      placeholder='At least 8 characters, 1 uppercase, 1 number'
+                      {...field}
+                      type={newPassword ? 'text' : 'password'}
+                      Icon={newPassword ? EyeOff : Eye}
+                      onIconClick={() => setNewPassword((prev) => !prev)}
+                    />
                   </FormControl>
                   <FormDescription>
                     Must be at least 8 characters, include an uppercase letter and a number.
                   </FormDescription>
-                  <FormMessage />
+                  <FormMessage className='text-red-200' />
                 </FormItem>
               )}
             />
@@ -126,10 +143,16 @@ const ChangePasswordForm = ({ onCancel, onSuccess }: ChangePasswordFormProps): R
                 <FormItem>
                   <FormLabel>Confirm new password</FormLabel>
                   <FormControl>
-                    <Input type='password' placeholder='••••••••' {...field} />
+                    <Input
+                      placeholder='Confirm your new password'
+                      {...field}
+                      type={confirmPassword ? 'text' : 'password'}
+                      Icon={confirmPassword ? EyeOff : Eye}
+                      onIconClick={() => setConfirmPassword((prev) => !prev)}
+                    />
                   </FormControl>
                   <FormDescription>Re-enter your new password for confirmation.</FormDescription>
-                  <FormMessage />
+                  <FormMessage className='text-red-200' />
                 </FormItem>
               )}
             />

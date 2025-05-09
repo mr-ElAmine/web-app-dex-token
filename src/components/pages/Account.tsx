@@ -19,8 +19,8 @@ import ChangePasswordForm from '../form/ChangePasswordForm';
 const Account = (): ReactNode => {
   const { user } = useAuth();
   return (
-    <div className='flex h-full w-full items-center justify-center p-5'>
-      <Tabs defaultValue='account' className='w-[400px]'>
+    <div className='flex h-full w-full justify-center p-5'>
+      <Tabs defaultValue='account' className='mt-10 w-[400px]'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='account'>Account</TabsTrigger>
           <TabsTrigger value='password'>Password</TabsTrigger>

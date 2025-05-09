@@ -1,10 +1,10 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios';
 
-import { config } from '@/configuration/utils/config';
 import { getCookie } from '@/configuration/utils/cookie';
+import { config } from '@/runtime-config';
 
 const AxiosInstance = axios.create({
-  baseURL: config.REACT_APP_API_URL,
+  baseURL: config.VITE_REACT_APP_API_URL,
 });
 
 AxiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
